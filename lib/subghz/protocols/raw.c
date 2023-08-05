@@ -15,7 +15,7 @@
 #define SUBGHZ_DOWNLOAD_MAX_SIZE 512
 
 static const SubGhzBlockConst subghz_protocol_raw_const = {
-    .te_short = 80,
+    .te_short = 50,
     .te_long = 32700,
     .te_delta = 0,
     .min_count_bit_for_found = 0,
@@ -223,8 +223,6 @@ void subghz_protocol_decoder_raw_feed(void* context, bool level, uint32_t durati
 
     if(instance->upload_raw != NULL) {
         if(duration > subghz_protocol_raw_const.te_short) {
-            if(duration > subghz_protocol_raw_const.te_long)
-                duration = subghz_protocol_raw_const.te_long;
             if(instance->last_level != level) {
                 instance->last_level = (level ? true : false);
                 instance->upload_raw[instance->ind_write++] = (level ? duration : -duration);
@@ -295,24 +293,19 @@ static bool subghz_protocol_encoder_raw_worker_init(SubGhzProtocolEncoderRAW* in
     return instance->is_runing;
 }
 
-void subghz_protocol_raw_gen_fff_data(FlipperFormat* flipper_format, const char* file_name) {
-    string_t temp_str;
-    string_init(temp_str);
+void subghz_protocol_raw_gen_fff_data(FlipperFormat* flipper_format, const char* file_path) {
     do {
         stream_clean(flipper_format_get_raw_stream(flipper_format));
         if(!flipper_format_write_string_cstr(flipper_format, "Protocol", "RAW")) {
             FURI_LOG_E(TAG, "Unable to add Protocol");
             break;
         }
-        string_printf(temp_str, "%s/%s%s", SUBGHZ_APP_FOLDER, file_name, SUBGHZ_APP_EXTENSION);
 
-        if(!flipper_format_write_string_cstr(
-               flipper_format, "File_name", string_get_cstr(temp_str))) {
+        if(!flipper_format_write_string_cstr(flipper_format, "File_name", file_path)) {
             FURI_LOG_E(TAG, "Unable to add File_name");
             break;
         }
     } while(false);
-    string_clear(temp_str);
 }
 
 bool subghz_protocol_encoder_raw_deserialize(void* context, FlipperFormat* flipper_format) {

@@ -5,12 +5,6 @@
 #include "../blocks/generic.h"
 #include "../blocks/math.h"
 
-/*
- * Help
- * https://phreakerclub.com/447
- *
- */
-
 #define TAG "SubGhzProtocolNiceFLO"
 
 static const SubGhzBlockConst subghz_protocol_nice_flo_const = {
@@ -94,6 +88,11 @@ void subghz_protocol_encoder_nice_flo_free(void* context) {
     free(instance);
 }
 
+/**
+ * Generating an upload from data.
+ * @param instance Pointer to a SubGhzProtocolEncoderNiceFlo instance
+ * @return true On success
+ */
 static bool subghz_protocol_encoder_nice_flo_get_upload(SubGhzProtocolEncoderNiceFlo* instance) {
     furi_assert(instance);
     size_t index = 0;

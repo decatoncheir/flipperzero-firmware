@@ -9,7 +9,7 @@ extern "C" {
 typedef struct NotificationApp NotificationApp;
 typedef struct {
     float frequency;
-    float pwm;
+    float volume;
 } NotificationMessageDataSound;
 
 typedef struct {
@@ -50,15 +50,17 @@ typedef enum {
 
     NotificationMessageTypeDelay,
 
-    NotificationMessageTypeLedDisplay,
-    NotificationMessageTypeLedDisplayLock,
-    NotificationMessageTypeLedDisplayUnlock,
+    NotificationMessageTypeLedDisplayBacklight,
+    NotificationMessageTypeLedDisplayBacklightEnforceOn,
+    NotificationMessageTypeLedDisplayBacklightEnforceAuto,
 
     NotificationMessageTypeDoNotReset,
 
     NotificationMessageTypeForceSpeakerVolumeSetting,
     NotificationMessageTypeForceVibroSetting,
     NotificationMessageTypeForceDisplayBrightnessSetting,
+
+    NotificationMessageTypeLedBrightnessSettingApply,
 } NotificationMessageType;
 
 typedef struct {

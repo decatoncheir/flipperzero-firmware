@@ -6,12 +6,6 @@
 #include "../blocks/generic.h"
 #include "../blocks/math.h"
 
-/*
- * Help
- * https://phreakerclub.com/447
- *
- */
-
 #define TAG "SubGhzProtocolNeroSketch"
 
 static const SubGhzBlockConst subghz_protocol_nero_sketch_const = {
@@ -95,6 +89,11 @@ void subghz_protocol_encoder_nero_sketch_free(void* context) {
     free(instance);
 }
 
+/**
+ * Generating an upload from data.
+ * @param instance Pointer to a SubGhzProtocolEncoderNeroSketch instance
+ * @return true On success
+ */
 static bool
     subghz_protocol_encoder_nero_sketch_get_upload(SubGhzProtocolEncoderNeroSketch* instance) {
     furi_assert(instance);
